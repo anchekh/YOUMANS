@@ -7,6 +7,25 @@ export default defineNuxtConfig({
     baseURL: '/YOUMANS/'
   },
   nitro: {
-    preset: 'github-pages'
+    preset: 'github-pages',
+    prerender: {
+		routes: [
+      '/',
+      '/store',
+      '/store/catalog',
+      '/store/product',
+      '/store/cart',
+      '/store/favorites',
+      '/store/login',
+      '/store/account',
+      '/store/admin'
+		]}
+  },
+  css: ['~/assets/css/main.css'],
+  runtimeConfig: {
+		public: {
+			supabaseUrl: '',
+			supabaseKey: ''
+		}
   },
 })

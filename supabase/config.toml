@@ -1,0 +1,4 @@
+[functions.shop-auth]
+verify_jwt = false
+[functions.shop-admin]
+verify_jwt = false
