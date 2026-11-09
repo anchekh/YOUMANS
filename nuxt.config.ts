@@ -4,7 +4,16 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
   app: {
-    baseURL: '/YOUMANS/'
+    baseURL: '/YOUMANS/',
+  	head: {
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          href: '/YOUMANS/favicon.svg?v=1'
+        }
+      ]
+    }
   },
   nitro: {
     preset: 'github-pages',
