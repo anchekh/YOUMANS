@@ -8,36 +8,47 @@ const loading = ref(true)
 const errorMessage = ref('')
 
 const favoriteProducts = computed(() => {
-	return favorites.value
-		.map(id => products.value.find(product => product.id === id))
-		.filter((product): product is Product => product !== undefined)
+    return favorites.value
+        .map(id => products.value.find(
+            product => String(product.id) === String(id)
+        ))
+        .filter((product): product is Product => product !== undefined)
 })
 
+
 onMounted(async () => {
-	initialize()
+    initialize()
 
-	if (!favorites.value.length) {
-		loading.value = false
-		return
-	}
+    console.log('ID избранного:', favorites.value)
 
-	try {
-		const supabase = useSupabase()
+    if (!favorites.value.length) {
+        loading.value = false
+        return
+    }
 
-		const { data, error } = await supabase
-			.from('products')
-			.select('id, slug, name, description, price, image_url')
-			.eq('active', true)
-			.in('id', favorites.value)
+    try {
+        const supabase = useSupabase()
 
-		if (error) throw error
+        const { data, error } = await supabase
+            .from('products')
+            .select('id, slug, name, description, price, image_url, active')
+            .in('id', favorites.value)
 
-		products.value = data ?? []
-	} catch {
-		errorMessage.value = 'Не удалось загрузить избранное'
-	} finally {
-		loading.value = false
-	}
+        console.log('Товары из Supabase:', data)
+        console.log('Ошибка Supabase:', error)
+
+        if (error) throw error
+
+        products.value = data ?? []
+
+        console.log('Найденные товары:', favoriteProducts.value)
+
+    } catch (error) {
+        console.error('Ошибка загрузки:', error)
+        errorMessage.value = 'Не удалось загрузить избранное'
+    } finally {
+        loading.value = false
+    }
 })
 </script>
 

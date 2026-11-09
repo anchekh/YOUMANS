@@ -11,6 +11,17 @@ export const useShop = () => {
 
 	const favoritesCount = computed(() => favorites.value.length)
 
+	const syncFavorites = (validIds: string[]) => {
+		favorites.value = favorites.value.filter(id =>
+			validIds.includes(id)
+		)
+
+		localStorage.setItem(
+			'favorites',
+			JSON.stringify(favorites.value)
+		)
+	}
+
 	const initialize = () => {
 		if (!import.meta.client || initialized.value) return
 

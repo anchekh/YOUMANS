@@ -32,35 +32,40 @@ const cartQuantity = computed(() => {
 				loading="lazy"
 			/>
 			<span v-else>Нет фото</span>
-			<button
-				type="button"
-				class="favorite-button"
-				:class="{ active: isFavorite }"
-				:aria-label="isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'"
-				:aria-pressed="isFavorite"
-				@click="toggleFavorite(product.id)"
-			>
-				<svg viewBox="0 0 24 24" :fill="isFavorite ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2">
-					<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" />
-				</svg>
-			</button>
 		</div>
 		<div class="product-info">
 			<h3>{{ product.name }}</h3>
 			<p>{{ product.description }}</p>
 			<strong>{{ formatPrice(product.price) }}</strong>
-			<button
-				type="button"
-				class="cart-button"
-				@click="addToCart(product.id)"
-			>
-				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-					<circle cx="9" cy="21" r="1" />
-					<circle cx="20" cy="21" r="1" />
-					<path d="M1 1h4l2.5 13h12l3-9H6" />
-				</svg>
-				{{ cartQuantity ? `В корзине: ${cartQuantity}` : 'В корзину' }}
-			</button>
+			<div class="product-actions">
+				<button
+					type="button"
+					class="cart-button"
+					@click="addToCart(product.id)"
+				>
+					<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="9" cy="21" r="1" />
+						<circle cx="20" cy="21" r="1" />
+						<path d="M1 1h4l2.5 13h12l3-9H6" />
+					</svg>
+					{{ cartQuantity ? `В корзине: ${cartQuantity}` : 'В корзину' }}
+				</button>
+				<button
+					type="button"
+					class="favorite-button"
+					:class="{ active: isFavorite }"
+					:aria-label="isFavorite ? 'Убрать из избранного' : 'Добавить в избранное'"
+					:aria-pressed="isFavorite"
+					@click="toggleFavorite(product.id)"
+				>
+					<svg viewBox="0 0 24 24"
+						:fill="isFavorite ? 'currentColor' : 'none'"
+						stroke="currentColor" stroke-width="2">
+						<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z" />
+					</svg>
+				</button>
+			</div>	
 		</div>
 	</article>
 </template>
@@ -124,22 +129,21 @@ const cartQuantity = computed(() => {
 }
 
 .favorite-button {
-	position: absolute;
-	top: 12px;
-	right: 12px;
-	z-index: 2;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 40px;
-	height: 40px;
-	padding: 0;
-	background: #fff;
-	border: 1px solid #eee;
-	border-radius: 10px;
-	color: #555;
-	cursor: pointer;
-	transition: color 0.2s ease, border-color 0.2s ease;
+    position: relative;
+    z-index: 2;
+    flex: 0 0 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    min-height: 44px;
+    padding: 0;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .favorite-button:hover,
@@ -161,6 +165,12 @@ const cartQuantity = computed(() => {
 }
 
 .product-info h3 {
+	min-height: calc(2 * 1.4em);
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	line-clamp: 2;
+	overflow: hidden;
 	margin: 0;
 	font-size: 18px;
 	font-weight: 700;
@@ -169,38 +179,52 @@ const cartQuantity = computed(() => {
 }
 
 .product-info p {
-	flex: 1;
+	min-height: calc(4 * 1.6em);
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 4;
+	line-clamp: 4;
+	overflow: hidden;
 	margin: 0;
 	color: #777;
 	font-size: 14px;
 	line-height: 1.6;
+	text-align: justify;
 	overflow-wrap: anywhere;
 }
 
+
 .product-info strong {
-	font-size: 22px;
-	font-weight: 700;
+	margin-top: auto;
+}
+
+.product-actions {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
 }
 
 .cart-button {
-	position: relative;
-	z-index: 2;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 10px;
-	width: 100%;
-	min-height: 44px;
-	padding: 10px 12px;
-	background: #E51A24;
-	border: none;
-	border-radius: 12px;
-	color: #fff;
-	font: inherit;
-	font-size: 14px;
-	font-weight: 600;
-	cursor: pointer;
-	transition: background 0.2s ease;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+    min-height: 44px;
+    padding: 10px 12px;
+    background: #E51A24;
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
 }
 
 .cart-button:hover {
