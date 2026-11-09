@@ -96,10 +96,10 @@ onMounted(async () => {
 						Сейчас оформить заказ могут только сотрудники компаний,
 						входящих в партнёрскую сеть 1С.
 					</p>
-					<a href="#products" class="hero-button">
+					<NuxtLink to="/store/catalog" class="hero-button">
 						Смотреть мерч
 						<span aria-hidden="true">→</span>
-					</a>
+					</NuxtLink>
 				</div>
 				<div class="hero-image">
 					<img :src="heroImage" alt="YOUMANS" />
