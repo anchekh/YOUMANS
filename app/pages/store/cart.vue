@@ -134,7 +134,7 @@ onMounted(async () => {
             </div>
             <div v-else class="empty">
                 <h2>Корзина пуста</h2>
-                <p>Добавь товары, которые хочешь приобрести.</p>
+                <p>Добавьте товары, которые хотите приобрести.</p>
                 <NuxtLink to="/store" class="button">
                     Смотреть товары
                 </NuxtLink>
