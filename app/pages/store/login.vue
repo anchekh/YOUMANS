@@ -54,8 +54,8 @@ onMounted(async () => {
 				<h1>{{ mode === 'login' ? 'Вход' : 'Регистрация' }}</h1>
 				<p class="auth-description">
 					{{ mode === 'login'
-						? 'Войдите в свой аккаунт YOUMANS'
-						: 'Создайте аккаунт YOUMANS'
+						? 'Войдите в свой аккаунт'
+						: 'Создайте аккаунт'
 					}}
 				</p>
 				<form @submit.prevent="submit">

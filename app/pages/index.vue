@@ -8,6 +8,7 @@
 				</div>
 			</div>
 			<NuxtLink to="/store">Перейти в магазин</NuxtLink>
+			<NuxtLink to="/about" style="background-color: #fff; color: #000; border: none; margin-top: 12px;">Информация о проекте</NuxtLink>
 		</div>
 	</div>
 </template>

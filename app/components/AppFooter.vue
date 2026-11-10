@@ -17,6 +17,7 @@ const logoUrl = `${useRuntimeConfig().app.baseURL}images/logo.png`
 				<NuxtLink to="/store/contacts">Контакты</NuxtLink>
 				<NuxtLink to="/store/about">О магазине</NuxtLink>
 				<NuxtLink to="/store/privacy">Политика конфиденциальности</NuxtLink>
+				<NuxtLink to="/about" style="color: #D71920;">О ПРОЕКТЕ</NuxtLink>
 			</nav>
 			<div class="footer-contact">
 				<a href="mailto:email@1c.ru">email@1c.ru</a>
