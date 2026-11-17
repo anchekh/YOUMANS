@@ -119,18 +119,23 @@ onMounted(async () => {
                         </div>
                     </article>
                 </div>
-                <aside class="summary">
-                    <h2>Ваш заказ</h2>
-                    <div class="summary-row">
-                        <span>Количество товаров</span>
-                        <span>{{ cart.reduce((sum, item) => sum + item.quantity, 0) }}</span>
-                    </div>
-                    <div class="summary-row total">
-                        <span>Итого</span>
-                        <strong>{{ formatPrice(total) }}</strong>
-                    </div>
-                    <p>Оформление заказов пока не подключено.</p>
-                </aside>
+				<aside class="summary">
+					<h2>Ваш заказ</h2>
+
+					<div class="summary-row">
+						<span>Количество товаров</span>
+						<span>{{ cartProducts.reduce((sum, item) => sum + item.quantity, 0) }}</span>
+					</div>
+
+					<div class="summary-row total">
+						<span>Итого</span>
+						<strong>{{ formatPrice(total) }}</strong>
+					</div>
+
+					<NuxtLink to="/store/checkout" class="checkout-button">
+						Оформить заказ
+					</NuxtLink>
+				</aside>
             </div>
             <div v-else class="empty">
                 <h2>Корзина пуста</h2>
@@ -336,6 +341,25 @@ h1 {
 	border-radius: 12px;
 	text-decoration: none;
 	font-weight: 600;
+}
+
+.checkout-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	min-height: 54px;
+	background: #D71920;
+	color: #fff;
+	border-radius: 12px;
+	text-decoration: none;
+	font-size: 16px;
+	font-weight: 600;
+	transition: background 0.2s;
+}
+
+.checkout-button:hover {
+	background: #b9152b;
 }
 
 @media (max-width: 1240px) {

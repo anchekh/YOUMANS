@@ -197,6 +197,7 @@ onMounted(async () => {
 				</p>
 			</section>
 		</main>
+		<CookieBanner />
 		<AppFooter />
 	</div>
 </template>

@@ -19,15 +19,16 @@ export default defineNuxtConfig({
     preset: 'github-pages',
     prerender: {
 		routes: [
-      '/',
-      '/store',
-      '/store/catalog',
-      '/store/product',
-      '/store/cart',
-      '/store/favorites',
-      '/store/login',
-      '/store/account',
-      '/store/admin'
+			'/',
+			'/store',
+			'/store/catalog',
+			'/store/product',
+			'/store/cart',
+			'/store/favorites',
+			'/store/login',
+			'/store/account',
+			'/store/admin',
+			'/store/checkout'
 		]}
   },
   css: ['~/assets/css/main.css'],

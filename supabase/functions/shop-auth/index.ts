@@ -154,7 +154,7 @@ Deno.serve(async request => {
 
 				if (passwordLength < 8 || passwordLength > 72) {
 					return json({
-						error: 'Пароль должен содержать от 8 до 72 байт'
+						error: 'Пароль должен содержать от 8 до 72 символов'
 					}, 400)
 				}
 
