@@ -61,6 +61,59 @@ Deno.serve(async request => {
 		try { body = JSON.parse(raw) } catch { return json({ error: 'Неверный формат запроса' }, 400) }
 		if (!isObject(body)) return json({ error: 'Неверный формат запроса' }, 400)
 
+		if (body.action === 'admin_list' || body.action === 'admin_update_status') {
+			const { data: admin, error: adminError } = await db.from('shop_users')
+				.select('role')
+				.eq('id', session.user_id)
+				.maybeSingle()
+
+			if (adminError) throw adminError
+			if (admin?.role !== 'admin') return json({ error: 'Доступ запрещён' }, 403)
+
+			const statuses = ['new', 'confirmed', 'assembling', 'shipping', 'completed', 'cancelled']
+
+			if (body.action === 'admin_list') {
+				const page = body.page === undefined ? 0 : body.page
+				const status = body.status ?? 'all'
+
+				if (typeof page !== 'number' || !Number.isInteger(page) || page < 0 || page > 10000 ||
+					typeof status !== 'string' || (status !== 'all' && !statuses.includes(status))) {
+					return json({ error: 'Неверные параметры списка' }, 400)
+				}
+
+				let query = db.from('shop_orders')
+					.select('id, order_number, status, total, payment_method, created_at, full_name, phone, email, city, address, comment, shop_order_items(id, product_name, image_url, unit_price, quantity, line_total)')
+
+				if (status !== 'all') query = query.eq('status', status)
+
+				const offset = page * 20
+				const { data, error } = await query
+					.order('created_at', { ascending: false })
+					.order('id', { ascending: false })
+					.range(offset, offset + 20)
+
+				if (error) throw error
+				return json({ orders: data.slice(0, 20), hasMore: data.length > 20 })
+			}
+
+			if (typeof body.order_id !== 'string' || !uuid.test(body.order_id) ||
+				typeof body.status !== 'string' || !statuses.includes(body.status) ||
+				typeof body.expected_status !== 'string' || !statuses.includes(body.expected_status)) {
+				return json({ error: 'Неверный номер или статус заказа' }, 400)
+			}
+
+			const { data, error } = await db.from('shop_orders')
+				.update({ status: body.status })
+				.eq('id', body.order_id)
+				.eq('status', body.expected_status)
+				.select('id, status')
+				.maybeSingle()
+
+			if (error) throw error
+			if (!data) return json({ error: 'Заказ не найден или его статус уже изменился. Обновите список.', code: 'STATUS_CONFLICT' }, 409)
+			return json({ order: data })
+		}
+
 		if (body.action === 'list') {
 			const page = body.page === undefined ? 0 : body.page
 			if (typeof page !== 'number' || !Number.isInteger(page) || page < 0 || page > 10000) {
