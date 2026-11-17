@@ -28,7 +28,11 @@ export default defineNuxtConfig({
 			'/store/login',
 			'/store/account',
 			'/store/admin',
-			'/store/checkout'
+			'/store/checkout',
+      '/store/contacts',
+      '/store/delivery',
+      '/store/about',
+      '/store/privacy',
 		]}
   },
   css: ['~/assets/css/main.css'],
